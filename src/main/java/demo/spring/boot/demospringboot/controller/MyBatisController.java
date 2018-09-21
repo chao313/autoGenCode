@@ -2,7 +2,6 @@ package demo.spring.boot.demospringboot.controller;
 
 import com.github.pagehelper.PageHelper;
 
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import demo.spring.boot.demospringboot.mybatis.service.CatService;
-import demo.spring.boot.demospringboot.mybatis.vo.Cat;
+import demo.spring.boot.demospringboot.vo.Cat;
 
 @RestController
 public class MyBatisController {

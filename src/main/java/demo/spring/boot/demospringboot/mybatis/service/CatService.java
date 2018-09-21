@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import demo.spring.boot.demospringboot.mybatis.mapper.CatMapper;
-import demo.spring.boot.demospringboot.mybatis.vo.Cat;
+import demo.spring.boot.demospringboot.vo.Cat;
 
 @Service
 public class CatService {

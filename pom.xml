@@ -97,6 +97,17 @@
             <version>0.8.0.RELEASE</version>
         </dependency>
 
+        <!--
+        lombok
+        -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+
     </dependencies>
 
 
@@ -116,7 +127,7 @@
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
-                            <mainClass>demo.spring.boot.demospringboot.DemoSpringBootApplication</mainClass>
+                            <mainClass>demo.spring.boot.demospringboot.AutoGenCodeBootApplication</mainClass>
                         </configuration>
                     </execution>
                 </executions>

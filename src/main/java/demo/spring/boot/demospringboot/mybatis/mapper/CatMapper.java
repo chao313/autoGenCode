@@ -7,11 +7,10 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import demo.spring.boot.demospringboot.mybatis.vo.Cat;
+import demo.spring.boot.demospringboot.vo.Cat;
 
 /**
  * 通过注解来执行sql

@@ -1,4 +1,4 @@
-package demo.spring.boot.demospringboot.mybatis.vo;
+package demo.spring.boot.demospringboot.vo;
 
 public class Cat {
     private Integer id;

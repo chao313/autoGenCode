@@ -1,4 +1,4 @@
-package demo.spring.boot.demospringboot.db;
+package demo.spring.boot.demospringboot.guest.service;
 
 import com.jolbox.bonecp.BoneCPDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -51,8 +51,8 @@ public class DBService {
 
         sqlSessionFactoryBean.setConfigLocation(
                 resolver.getResource("classpath:/guest-mybatis/config/mybatis-config.xml"));
-        sqlSessionFactoryBean.setMapperLocations(
-                resolver.getResources("classpath:/guest-mybatis/mappers/mysql/**/*.xml"));
+//        sqlSessionFactoryBean.setMapperLocations(
+//                resolver.getResources("classpath:/guest-mybatis/mappers/mysql/**/*.xml"));
 
         this.sqlSessionFactoryBean = sqlSessionFactoryBean;
     }

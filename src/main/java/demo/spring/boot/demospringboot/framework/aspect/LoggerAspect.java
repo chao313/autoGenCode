@@ -23,7 +23,8 @@ public class LoggerAspect {
     /**
      * Pointcut 定义Pointcut，Pointcut的名称为aspectjMethod()，此方法没有返回值和参数 该方法就是一个标识，不进行调用
      */
-    @Pointcut("execution(* demo.spring.boot.demospringboot.controller..*.*(..)) ")
+
+    @Pointcut("execution(* demo.spring.boot.demospringboot.controller..*.*(..)) || execution(* demo.spring.boot.demospringboot.guest.controller..*.*(..))")
     private void doLogger() {
     }
 

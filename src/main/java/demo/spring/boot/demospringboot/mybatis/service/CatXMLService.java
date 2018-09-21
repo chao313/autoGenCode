@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import demo.spring.boot.demospringboot.mybatis.dao.CatXMLDao;
-import demo.spring.boot.demospringboot.mybatis.vo.Cat;
+import demo.spring.boot.demospringboot.vo.Cat;
 
 @Service
 public class CatXMLService {

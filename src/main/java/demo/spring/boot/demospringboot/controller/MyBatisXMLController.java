@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import demo.spring.boot.demospringboot.mybatis.service.CatXMLService;
-import demo.spring.boot.demospringboot.mybatis.vo.Cat;
+import demo.spring.boot.demospringboot.vo.Cat;
 
 @RestController
 public class MyBatisXMLController {

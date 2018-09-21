@@ -2,9 +2,8 @@ package demo.spring.boot.demospringboot.mybatis.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
-import demo.spring.boot.demospringboot.mybatis.vo.Cat;
+import demo.spring.boot.demospringboot.vo.Cat;
 
 @Mapper
 public interface CatXMLDao {
