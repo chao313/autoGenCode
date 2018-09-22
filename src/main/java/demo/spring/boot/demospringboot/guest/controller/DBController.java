@@ -29,7 +29,7 @@ public class DBController {
         try {
             response.setCode(Code.System.OK);
             response.setMsg(Code.System.SERVER_SUCCESS_MSG);
-            dbService.connect(vo.getJdbcDriverClassName(), vo.getJdbcUrl(),
+            dbService.connect(vo.getDriver(), vo.genJdbcUrl(),
                     vo.getUserName(), vo.getPassword());
             boolean result = dbService.isconnect();
             response.setContent(result);
