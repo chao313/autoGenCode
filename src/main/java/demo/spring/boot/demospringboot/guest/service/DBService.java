@@ -1,47 +1,19 @@
 package demo.spring.boot.demospringboot.guest.service;
 
-import com.jolbox.bonecp.BoneCPDataSource;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import java.io.IOException;
-
-
+/**
+ * 2018/9/22    Created by   chao
+ * 处理DB相关
+ */
 public interface DBService {
     /**
-     * 获取连接池信息
-     *
-     * @param jdbcDriverClassName
-     * @param jdbcUrl
-     * @param userName
-     * @param password
+     * 根据数据名称获取所有的tables
+     * @param database
      * @return
      */
-     void generateDataSource(String jdbcDriverClassName, String jdbcUrl, String userName, String password) ;
+    List<String> getTablesByDataBase(String database);
 
 
-    /**
-     * 获取Session
-     *
-     * @return
-     * @throws IOException
-     */
-     void generateSqlSession() throws IOException;
 
-    /**
-     * 连接数据库
-     * @param jdbcDriverClassName
-     * @param jdbcUrl
-     * @param userName
-     * @param password
-     * @throws IOException
-     */
-     void connect(String jdbcDriverClassName, String jdbcUrl, String userName, String password) throws IOException;
-
-    /**
-     * 判断是否连接
-     * @return
-     */
-     boolean isconnect();
 }

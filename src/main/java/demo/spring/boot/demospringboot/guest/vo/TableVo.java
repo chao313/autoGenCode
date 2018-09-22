@@ -10,6 +10,6 @@ import lombok.ToString;
  */
 @Data
 @ToString
-public class DBVo {
-    private List<TableVo> tableVos;
+public class TableVo {
+    List<FieldVo> fileldVos;
 }

@@ -1,83 +1,33 @@
 package demo.spring.boot.demospringboot.guest.service.impl;
 
-import com.jolbox.bonecp.BoneCPDataSource;
-
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.util.List;
 
+import demo.spring.boot.demospringboot.guest.dao.DBDAO;
+import demo.spring.boot.demospringboot.guest.service.DBInitService;
 import demo.spring.boot.demospringboot.guest.service.DBService;
 
+/**
+ * 2018/9/23    Created by   chao
+ */
 @Service
-public class DBServiceImpl implements DBService{
-
-    private BoneCPDataSource dataSource;
-    private SqlSessionFactoryBean sqlSessionFactoryBean;
-
-    /**
-     * 获取连接池信息
-     *
-     * @param jdbcDriverClassName
-     * @param jdbcUrl
-     * @param userName
-     * @param password
-     * @return
-     */
-    public void generateDataSource(String jdbcDriverClassName, String jdbcUrl, String userName, String password) {
-
-        BoneCPDataSource boneCPDataSource = new BoneCPDataSource();
-        boneCPDataSource.setDriverClass(jdbcDriverClassName);// 数据库驱动
-        boneCPDataSource.setJdbcUrl(jdbcUrl);// 相应驱动的jdbcUrl
-        boneCPDataSource.setUsername(userName); // 数据库的用户名
-        boneCPDataSource.setPassword(password);// 数据库的密码
-        boneCPDataSource.setIdleConnectionTestPeriodInMinutes(60); // 检查数据库连接池中空闲连接的间隔时间，单位是分，默认值：240，如果要取消则设置为0
-        boneCPDataSource.setIdleMaxAgeInMinutes(30);// 连接池中未使用的链接最大存活时间，单位是分，默认值：60，如果要永远存活设置为0
-        boneCPDataSource.setMaxConnectionsPerPartition(100);// 每个分区最大的连接数
-        boneCPDataSource.setMinConnectionsPerPartition(5); // 每个分区最小的连接数
-        this.dataSource = boneCPDataSource;
-    }
+public class DBServiceImpl implements DBService {
+    @Autowired
+    private DBDAO dbDAO;
 
 
-    /**
-     * 获取Session
-     *
-     * @return
-     * @throws IOException
-     */
-    public void generateSqlSession() throws IOException {
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(dataSource);//设置数据源
+//    private DBInitService dbInitService;
 
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//    public DBServiceImpl() {
+//        this.dbDAO = dbInitService.getSqlSessionFactoryBean().;
+//    }
 
-        sqlSessionFactoryBean.setConfigLocation(
-                resolver.getResource("classpath:/guest-mybatis/config/mybatis-config.xml"));
-//        sqlSessionFactoryBean.setMapperLocations(
-//                resolver.getResources("classpath:/guest-mybatis/mappers/mysql/**/*.xml"));
 
-        this.sqlSessionFactoryBean = sqlSessionFactoryBean;
-    }
 
-    /**
-     * 连接数据库
-     * @param jdbcDriverClassName
-     * @param jdbcUrl
-     * @param userName
-     * @param password
-     * @throws IOException
-     */
-    public void connect(String jdbcDriverClassName, String jdbcUrl, String userName, String password) throws IOException {
-        this.generateDataSource(jdbcDriverClassName,jdbcUrl,userName,password);
-        this.generateSqlSession();
-    }
-
-    /**
-     * 判断是否连接
-     * @return
-     */
-    public boolean isconnect() {
-        return this.sqlSessionFactoryBean == null ? false : true;
+    @Override
+    public List<String> getTablesByDataBase(String database) {
+        return dbDAO.queryTablesByDatabase(database);
     }
 }
