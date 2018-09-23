@@ -9,6 +9,7 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.io.IOException;
 
@@ -18,27 +19,14 @@ import demo.spring.boot.demospringboot.guest.service.DBService;
 import demo.spring.boot.demospringboot.util.SpringContextUtil;
 
 @Service
+@SessionScope
 public class DBInitService {
 
-    private BoneCPDataSource dataSource;
-    private SqlSessionFactoryBean sqlSessionFactoryBean;
+    private SqlSessionFactoryBean guestSqlSessionFactoryBean;
 
-//    public void xx(){ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) SpringContextUtil.getApplicationContext();
-//
-//        // 获取bean工厂并转换为DefaultListableBeanFactory
-//        DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) configurableApplicationContext.getBeanFactory();
-//
-//        // 通过BeanDefinitionBuilder创建bean定义
-//        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(UserController.class);
-//
-//        // 设置属性userService,此属性引用已经定义的bean:userService,这里userService已经被spring容器管理了.
-////        beanDefinitionBuilder.addPropertyReference("userService", "userService");
-//
-//        // 注册bean
-//        defaultListableBeanFactory.registerBeanDefinition("userController", beanDefinitionBuilder.getRawBeanDefinition());
-//
-//    }
-
+    public SqlSessionFactoryBean getGuestSqlSessionFactoryBean() {
+        return guestSqlSessionFactoryBean;
+    }
 
     private BoneCPDataSource generBoneCPDataSource(String jdbcDriverClassName, String jdbcUrl, String userName, String password) {
         BoneCPDataSource boneCPDataSource = new BoneCPDataSource();
@@ -54,38 +42,17 @@ public class DBInitService {
     }
 
 
-    public void registerSqlSessionFactory(String jdbcDriverClassName, String jdbcUrl, String userName, String password) throws IOException {
-        ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) SpringContextUtil.getApplicationContext();
-
-        // 获取bean工厂并转换为DefaultListableBeanFactory
-        DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) configurableApplicationContext.getBeanFactory();
-
-        // 通过BeanDefinitionBuilder创建SqlSessionFactoryBean定义
-        BeanDefinitionBuilder sqlSessionFactoryBeanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(SqlSessionFactoryBean.class);
-        sqlSessionFactoryBeanDefinitionBuilder.addPropertyValue("dataSource", this.generBoneCPDataSource(jdbcDriverClassName, jdbcUrl, userName, password));
+    public SqlSessionFactoryBean generateGuestSqlSessionFactory(String jdbcDriverClassName, String jdbcUrl, String userName, String password) throws IOException {
+        SqlSessionFactoryBean guestSqlSessionFactoryBean = new SqlSessionFactoryBean();
+        guestSqlSessionFactoryBean.setDataSource(this.generBoneCPDataSource(jdbcDriverClassName, jdbcUrl, userName, password));//设置数据源
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBeanDefinitionBuilder.addPropertyValue("configLocation", resolver.getResource("classpath:/guest-mybatis/config/mybatis-config.xml"));
-        sqlSessionFactoryBeanDefinitionBuilder.addPropertyValue("mapperLocations", resolver.getResources("classpath:/guest-mybatis/mapper/*Mapper.xml"));
-        defaultListableBeanFactory.registerBeanDefinition("guestSqlSessionFactoryBean", sqlSessionFactoryBeanDefinitionBuilder.getRawBeanDefinition());// 注册bean
+        guestSqlSessionFactoryBean.setConfigLocation(
+                resolver.getResource("classpath:/guest-mybatis/config/mybatis-config.xml"));
+        guestSqlSessionFactoryBean.setMapperLocations(
+                resolver.getResources("classpath:/guest-mybatis/mapper/*Mapper.xml"));
 
-
-        // 通过BeanDefinitionBuilder创建MapperScannerConfigurer定义
-        BeanDefinitionBuilder mapperScannerConfigurerBeanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(MapperScannerConfigurer.class);
-        sqlSessionFactoryBeanDefinitionBuilder.addPropertyValue("basePackage", "demo.spring.boot.demospringboot.guest.dao");
-        sqlSessionFactoryBeanDefinitionBuilder.addPropertyValue("sqlSessionFactoryBeanName", "guestSqlSessionFactoryBean");
-        defaultListableBeanFactory.registerBeanDefinition("guestMapperScannerConfigurer", mapperScannerConfigurerBeanDefinitionBuilder.getRawBeanDefinition());// 注册bean
-
-
-
- // 通过BeanDefinitionBuilder创建 DBService 定义
-        BeanDefinitionBuilder DBServiceBeanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(DBService.class);
-        defaultListableBeanFactory.registerBeanDefinition("", DBServiceBeanDefinitionBuilder.getRawBeanDefinition());// 注册bean
-
-
-
-
-
-
+        this.guestSqlSessionFactoryBean = guestSqlSessionFactoryBean;
+        return guestSqlSessionFactoryBean;
     }
 
     /**
@@ -97,7 +64,7 @@ public class DBInitService {
      * @throws IOException
      */
     public void connect(String jdbcDriverClassName, String jdbcUrl, String userName, String password) throws IOException {
-        this.registerSqlSessionFactory(jdbcDriverClassName, jdbcUrl, userName, password);
+        this.generateGuestSqlSessionFactory(jdbcDriverClassName, jdbcUrl, userName, password);
     }
 
     /**
@@ -105,14 +72,7 @@ public class DBInitService {
      * @return
      */
     public boolean isconnect() {
-        return this.sqlSessionFactoryBean == null ? false : true;
+        return this.guestSqlSessionFactoryBean == null ? false : true;
     }
 
-//    @Bean
-    public MapperScannerConfigurer createMapperScannerConfigurer() {
-        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setBasePackage("demo.spring.boot.demospringboot.guest.dao");
-        mapperScannerConfigurer.setSqlSessionFactoryBeanName("guestSqlSessionFactoryBean");
-        return mapperScannerConfigurer;
-    }
 }

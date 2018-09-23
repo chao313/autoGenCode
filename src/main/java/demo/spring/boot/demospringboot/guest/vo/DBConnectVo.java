@@ -41,7 +41,7 @@ public class DBConnectVo {
 
 
    public enum Type {
-        MYSQL("mysql", "jdbc:mysql: ","com.mysql.jdbc.Driver"), ORACLE("mysql", "暂不支持","暂不支持");
+        MYSQL("mysql", "jdbc:mysql://","com.mysql.jdbc.Driver"), ORACLE("mysql", "暂不支持","暂不支持");
         private String key;
         private String value;
         private String driver;

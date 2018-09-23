@@ -12,7 +12,7 @@ public interface DBService {
      * @param database
      * @return
      */
-    List<String> getTablesByDataBase(String database);
+    List<String> getTablesByDataBase(String database) throws Exception;
 
     String test();
 

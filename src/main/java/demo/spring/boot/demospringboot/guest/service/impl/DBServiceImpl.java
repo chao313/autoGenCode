@@ -2,6 +2,7 @@ package demo.spring.boot.demospringboot.guest.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
 
@@ -14,20 +15,20 @@ import demo.spring.boot.demospringboot.guest.service.DBService;
  */
 @Service
 public class DBServiceImpl implements DBService {
-//    @Autowired
+
+    @Autowired
+    private DBInitService dbInitService;
+
+
     private DBDAO dbDAO;
 
 
-//    private DBInitService dbInitService;
-
-//    public DBServiceImpl() {
-//        this.dbDAO = dbInitService.getSqlSessionFactoryBean().;
-//    }
 
 
 
     @Override
-    public List<String> getTablesByDataBase(String database) {
+    public List<String> getTablesByDataBase(String database) throws Exception {
+        this.dbDAO = dbInitService.getGuestSqlSessionFactoryBean().getObject().openSession().getMapper(DBDAO.class);
         return dbDAO.queryTablesByDatabase(database);
     }
 

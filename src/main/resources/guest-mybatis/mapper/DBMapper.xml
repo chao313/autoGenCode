@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="demo.spring.boot.demospringboot.guest.dao.DBDAO">
-    <select id="queryTablesByDatabase">
+    <select id="queryTablesByDatabase" resultType="java.lang.String">
     SELECT information_schema.`TABLES`.TABLE_NAME
     FROM information_schema.TABLES
-    WHERE information_schema.TABLES.TABLE_SCHEMA= ${database}
+    WHERE information_schema.TABLES.TABLE_SCHEMA= "${database}"
     </select>
 
     <select id="test" resultType="java.lang.String">
