@@ -15,5 +15,7 @@ public class CatXMLService {
         return catXMLDao.queryById(id);
     }
 
+    public String test(){return catXMLDao.test();}
+
 
 }

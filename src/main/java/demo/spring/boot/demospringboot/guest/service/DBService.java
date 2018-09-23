@@ -14,6 +14,7 @@ public interface DBService {
      */
     List<String> getTablesByDataBase(String database);
 
+    String test();
 
 
 }

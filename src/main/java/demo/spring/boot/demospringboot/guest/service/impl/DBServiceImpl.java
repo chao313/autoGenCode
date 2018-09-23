@@ -14,7 +14,7 @@ import demo.spring.boot.demospringboot.guest.service.DBService;
  */
 @Service
 public class DBServiceImpl implements DBService {
-    @Autowired
+//    @Autowired
     private DBDAO dbDAO;
 
 
@@ -29,5 +29,10 @@ public class DBServiceImpl implements DBService {
     @Override
     public List<String> getTablesByDataBase(String database) {
         return dbDAO.queryTablesByDatabase(database);
+    }
+
+    @Override
+    public String test() {
+        return dbDAO.test();
     }
 }

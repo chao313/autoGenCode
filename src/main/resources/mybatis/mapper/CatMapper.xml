@@ -6,4 +6,8 @@
     SELECT id , name , age from t_cat
     WHERE id = #{id}
 </select>
+
+    <select id="test" resultType="java.lang.String">
+        SELECT "xx"
+    </select>
 </mapper>

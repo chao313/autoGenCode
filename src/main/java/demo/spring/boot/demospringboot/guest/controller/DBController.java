@@ -34,24 +34,24 @@ public class DBController {
     private DBConnectVo dbConnectVo;
 
 
-    @GetMapping("/connect")
-    public Response Connect(@ApiParam /*使用验证*/DBConnectVo vo) {
+    @GetMapping("/registerSqlSessionFactory")
+    public Response registerSqlSessionFactory(@ApiParam /*使用验证*/DBConnectVo vo) {
         logger.info("vo:{}", vo);
         BeanUtils.copyProperties(vo, dbConnectVo);
         Response<Boolean> response = new Response<>();
         try {
             response.setCode(Code.System.OK);
             response.setMsg(Code.System.SERVER_SUCCESS_MSG);
-            dbInitService.connect(vo.getDriver(), vo.genJdbcUrl(),
+            dbInitService.registerSqlSessionFactory(vo.getDriver(), vo.genJdbcUrl(),
                     vo.getUserName(), vo.getPassword());
             boolean result = dbInitService.isconnect();
             response.setContent(result);
-            logger.info("【guest:DBController:Connect】成功", vo);
+            logger.info("【guest:DBController:registerSqlSessionFactory】成功", vo);
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
             response.setMsg(e.toString());
             response.addException(e);
-            logger.info("【guest:DBController:Connect】失败:{}", vo, e);
+            logger.info("【guest:DBController:registerSqlSessionFactory】失败:{}", vo, e);
         }
         return response;
     }
@@ -65,7 +65,7 @@ public class DBController {
         try {
             response.setCode(Code.System.OK);
             response.setMsg(Code.System.SERVER_SUCCESS_MSG);
-            tables = dbService.getTablesByDataBase(dbConnectVo.getDatabase());
+            tables = dbService.getTablesByDataBase("guest_autoGenCode");
             response.setContent(tables);
             logger.info("【guest:DBController:Connect】成功", tables);
         } catch (Exception e) {
@@ -73,6 +73,26 @@ public class DBController {
             response.setMsg(e.toString());
             response.addException(e);
             logger.info("【guest:DBController:Connect】失败:{}", tables, e);
+        }
+        return response;
+    }
+
+
+    @GetMapping("/test")
+    public Response test() {
+        Response<String> response = new Response<>();
+        String result = null;
+        try {
+            response.setCode(Code.System.OK);
+            response.setMsg(Code.System.SERVER_SUCCESS_MSG);
+            result = dbService.test();
+            response.setContent(result);
+            logger.info("【guest:DBController:test】成功", result);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.toString());
+            response.addException(e);
+            logger.info("【guest:DBController:test】失败:{}", result, e);
         }
         return response;
     }

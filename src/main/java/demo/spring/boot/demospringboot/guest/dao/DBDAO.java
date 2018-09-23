@@ -9,7 +9,6 @@ import java.util.List;
  * 2018/9/22    Created by   chao
  * 目的是查询数据库的相关信息
  */
-@Mapper
 public interface DBDAO {
     /**
      * 根据database获取tables
@@ -17,4 +16,6 @@ public interface DBDAO {
      * @return
      */
     List<String> queryTablesByDatabase(@Param(value = "database") String database);
+
+    String test();
 }

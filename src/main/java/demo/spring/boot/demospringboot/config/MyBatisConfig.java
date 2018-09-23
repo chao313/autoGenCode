@@ -16,7 +16,7 @@ import java.io.IOException;
 @AutoConfigureAfter(DataSourceConfig.class)//表示在DataSource之后才自动装配
 public class MyBatisConfig {
 
-    @Bean
+    @Bean("sqlSessionFactoryBean")
     @ConditionalOnMissingBean //当容器里没有指定的Bean的情况下创建该对象
     public SqlSessionFactoryBean generateSqlSession(BoneCPDataSource dataSource) throws IOException {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
@@ -36,6 +36,7 @@ public class MyBatisConfig {
     public MapperScannerConfigurer createMapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setBasePackage("demo.spring.boot.demospringboot.mybatis.dao");
+        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactoryBean");
         return mapperScannerConfigurer;
     }
 }
