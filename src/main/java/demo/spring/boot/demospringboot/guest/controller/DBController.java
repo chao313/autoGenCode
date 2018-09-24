@@ -5,12 +5,14 @@ import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.guest.service.DBInitService;
 import demo.spring.boot.demospringboot.guest.service.DBService;
 import demo.spring.boot.demospringboot.guest.vo.DBConnectVo;
+import demo.spring.boot.demospringboot.guest.vo.FieldVo;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.annotation.SessionScope;
@@ -45,6 +47,7 @@ public class DBController {
             dbInitService.generateGuestSqlSessionFactory(vo.getDriver(), vo.genJdbcUrl(),
                     vo.getUserName(), vo.getPassword());
             boolean result = dbInitService.isconnect();
+            dbService.init();//service赋值
             response.setContent(result);
             logger.info("【guest:DBController:generateGuestSqlSessionFactory】成功", vo);
         } catch (Exception e) {
@@ -58,21 +61,41 @@ public class DBController {
 
 
     @GetMapping("/get-tables")
-    public Response getTablesByDataBase() {
+    public Response getTables() {
         logger.info("vo:{}", dbConnectVo);
         Response<List<String>> response = new Response<>();
         List<String> tables = null;
         try {
             response.setCode(Code.System.OK);
             response.setMsg(Code.System.SERVER_SUCCESS_MSG);
-            tables = dbService.getTablesByDataBase(dbConnectVo.getDatabase());
+            tables = dbService.getTables();
             response.setContent(tables);
-            logger.info("【guest:DBController:Connect】成功", tables);
+            logger.info("【guest:DBController:getTables】成功", tables);
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
             response.setMsg(e.toString());
             response.addException(e);
-            logger.info("【guest:DBController:Connect】失败:{}", tables, e);
+            logger.info("【guest:DBController:getTables】失败:{}", tables, e);
+        }
+        return response;
+    }
+
+    @GetMapping("/get-fieldVos/{tableName}")
+    public Response getTableVos(@PathVariable(value = "tableName") String tableName) {
+        logger.info("vo:{}", dbConnectVo);
+        Response<List<FieldVo>> response = new Response<>();
+        List<FieldVo> fieldVos = null;
+        try {
+            response.setCode(Code.System.OK);
+            response.setMsg(Code.System.SERVER_SUCCESS_MSG);
+            fieldVos = dbService.getFieldsByTableName(tableName);
+            response.setContent(fieldVos);
+            logger.info("【guest:DBController:getTables】成功", fieldVos);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.toString());
+            response.addException(e);
+            logger.info("【guest:DBController:getTables】失败:{}", fieldVos, e);
         }
         return response;
     }

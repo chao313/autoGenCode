@@ -3,20 +3,11 @@ package demo.spring.boot.demospringboot.guest.service;
 import com.jolbox.bonecp.BoneCPDataSource;
 
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.mapper.MapperScannerConfigurer;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.io.IOException;
-
-import demo.spring.boot.demospringboot.guest.dao.DBDAO;
-import demo.spring.boot.demospringboot.guest.service.DBInitService;
-import demo.spring.boot.demospringboot.guest.service.DBService;
-import demo.spring.boot.demospringboot.util.SpringContextUtil;
 
 @Service
 @SessionScope

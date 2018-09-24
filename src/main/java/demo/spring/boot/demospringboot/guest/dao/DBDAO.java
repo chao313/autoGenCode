@@ -1,9 +1,10 @@
 package demo.spring.boot.demospringboot.guest.dao;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+
+import demo.spring.boot.demospringboot.guest.vo.FieldVo;
 
 /**
  * 2018/9/22    Created by   chao
@@ -12,10 +13,11 @@ import java.util.List;
 public interface DBDAO {
     /**
      * 根据database获取tables
-     * @param database
      * @return
      */
-    List<String> queryTablesByDatabase(@Param(value = "database") String database);
+    List<String> queryTablesByDatabase();
+
+    List<FieldVo> getFieldVosByTableName(@Param(value = "tableName") String tableName);
 
     String test();
 }

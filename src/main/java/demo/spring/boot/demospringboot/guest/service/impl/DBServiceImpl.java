@@ -2,13 +2,13 @@ package demo.spring.boot.demospringboot.guest.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
 
 import demo.spring.boot.demospringboot.guest.dao.DBDAO;
 import demo.spring.boot.demospringboot.guest.service.DBInitService;
 import demo.spring.boot.demospringboot.guest.service.DBService;
+import demo.spring.boot.demospringboot.guest.vo.FieldVo;
 
 /**
  * 2018/9/23    Created by   chao
@@ -22,14 +22,22 @@ public class DBServiceImpl implements DBService {
 
     private DBDAO dbDAO;
 
-
-
+    public void init() throws Exception {
+        if (null == this.dbDAO) {
+            this.dbDAO = dbInitService.getGuestSqlSessionFactoryBean().getObject().openSession().getMapper(DBDAO.class);
+        }
+    }
 
 
     @Override
-    public List<String> getTablesByDataBase(String database) throws Exception {
-        this.dbDAO = dbInitService.getGuestSqlSessionFactoryBean().getObject().openSession().getMapper(DBDAO.class);
-        return dbDAO.queryTablesByDatabase(database);
+    public List<String> getTables() {
+
+        return dbDAO.queryTablesByDatabase();
+    }
+
+    @Override
+    public List<FieldVo> getFieldsByTableName(String tableName) {
+        return dbDAO.getFieldVosByTableName(tableName);
     }
 
     @Override
