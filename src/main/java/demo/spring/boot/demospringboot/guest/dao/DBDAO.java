@@ -1,5 +1,6 @@
 package demo.spring.boot.demospringboot.guest.dao;
 
+import demo.spring.boot.demospringboot.guest.vo.SqlStructVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import demo.spring.boot.demospringboot.guest.vo.FieldVo;
 public interface DBDAO {
     /**
      * 根据database获取tables
+     *
      * @return
      */
     List<String> queryTablesByDatabase();
@@ -20,4 +22,8 @@ public interface DBDAO {
     List<FieldVo> getFieldVosByTableName(@Param(value = "tableName") String tableName);
 
     String test();
+
+    List<SqlStructVo> getSqlStructVosAll();
+
+    List<SqlStructVo> getSqlStructVosByTableName(@Param(value = "tableName") String tableName);
 }

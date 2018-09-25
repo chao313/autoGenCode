@@ -6,6 +6,7 @@ import demo.spring.boot.demospringboot.guest.service.DBInitService;
 import demo.spring.boot.demospringboot.guest.service.DBService;
 import demo.spring.boot.demospringboot.guest.vo.DBConnectVo;
 import demo.spring.boot.demospringboot.guest.vo.FieldVo;
+import demo.spring.boot.demospringboot.guest.vo.SqlStructVo;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/DB")
+@RequestMapping(value = "/DB")
 @SessionScope
 public class DBController {
 
@@ -80,8 +81,10 @@ public class DBController {
         return response;
     }
 
+
+
     @GetMapping("/get-fieldVos/{tableName}")
-    public Response getTableVos(@PathVariable(value = "tableName") String tableName) {
+    public Response getFieldVos(@PathVariable(value = "tableName") String tableName) {
         logger.info("vo:{}", dbConnectVo);
         Response<List<FieldVo>> response = new Response<>();
         List<FieldVo> fieldVos = null;
@@ -90,12 +93,52 @@ public class DBController {
             response.setMsg(Code.System.SERVER_SUCCESS_MSG);
             fieldVos = dbService.getFieldsByTableName(tableName);
             response.setContent(fieldVos);
-            logger.info("【guest:DBController:getTables】成功", fieldVos);
+            logger.info("【guest:DBController:getFieldVos】成功", fieldVos);
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
             response.setMsg(e.toString());
             response.addException(e);
-            logger.info("【guest:DBController:getTables】失败:{}", fieldVos, e);
+            logger.info("【guest:DBController:getFieldVos】失败:{}", fieldVos, e);
+        }
+        return response;
+    }
+
+    @GetMapping("/get-sqlStructVos-all")
+    public Response getSqlStructVosAll() {
+        logger.info("vo:{}", dbConnectVo);
+        Response<List<SqlStructVo>> response = new Response<>();
+        List<SqlStructVo> vos = null;
+        try {
+            response.setCode(Code.System.OK);
+            response.setMsg(Code.System.SERVER_SUCCESS_MSG);
+            vos = dbService.getSqlStructVosAll();
+            response.setContent(vos);
+            logger.info("【guest:DBController:getSqlStructVosAll】成功", vos);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.toString());
+            response.addException(e);
+            logger.info("【guest:DBController:getSqlStructVosAll】失败:{}", vos, e);
+        }
+        return response;
+    }
+
+    @GetMapping("/get-sqlStructVos/{tableName}")
+    public Response getSqlStructVosByTableName(@PathVariable(value = "tableName") String tableName) {
+        logger.info("vo:{}", dbConnectVo);
+        Response<List<SqlStructVo>> response = new Response<>();
+        List<SqlStructVo> vos = null;
+        try {
+            response.setCode(Code.System.OK);
+            response.setMsg(Code.System.SERVER_SUCCESS_MSG);
+            vos = dbService.getSqlStructVosByTableName(tableName);
+            response.setContent(vos);
+            logger.info("【guest:DBController:getSqlStructVosByTableName】成功", vos);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.toString());
+            response.addException(e);
+            logger.info("【guest:DBController:getSqlStructVosByTableName】失败:{}", vos, e);
         }
         return response;
     }

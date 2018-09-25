@@ -1,5 +1,6 @@
 package demo.spring.boot.demospringboot.guest.service;
 
+import demo.spring.boot.demospringboot.guest.vo.SqlStructVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,6 +23,10 @@ public interface DBService {
     List<FieldVo> getFieldsByTableName(String tableName);
 
     String test();
+
+    List<SqlStructVo> getSqlStructVosAll();
+
+    List<SqlStructVo> getSqlStructVosByTableName(String tableName);
 
 
 }

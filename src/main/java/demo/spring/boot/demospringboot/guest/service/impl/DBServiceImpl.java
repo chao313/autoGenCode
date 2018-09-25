@@ -1,5 +1,6 @@
 package demo.spring.boot.demospringboot.guest.service.impl;
 
+import demo.spring.boot.demospringboot.guest.vo.SqlStructVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +44,15 @@ public class DBServiceImpl implements DBService {
     @Override
     public String test() {
         return dbDAO.test();
+    }
+
+    @Override
+    public List<SqlStructVo> getSqlStructVosAll() {
+        return dbDAO.getSqlStructVosAll();
+    }
+
+    @Override
+    public List<SqlStructVo> getSqlStructVosByTableName(String tableName) {
+        return dbDAO.getSqlStructVosByTableName(tableName);
     }
 }

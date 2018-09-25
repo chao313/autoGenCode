@@ -13,4 +13,59 @@
     <select id="test" resultType="java.lang.String">
         SELECT "xx"
     </select>
+
+
+    <select id="getSqlStructVosAll" resultType="demo.spring.boot.demospringboot.guest.vo.SqlStructVo">
+         SELECT    `TABLE_CATALOG`            AS `tableCatalog`
+                 , `TABLE_SCHEMA`             AS `tableSchema`
+                 , `TABLE_NAME`               AS `tableName`
+                 , `COLUMN_NAME`              AS `columnName`
+                 , `ORDINAL_POSITION`         AS `ordinalPosition`
+                 , `COLUMN_DEFAULT`           AS `columnDefault`
+                 , `IS_NULLABLE`              AS `isNullable`
+                 , `DATA_TYPE`                AS `dataType`
+                 , `CHARACTER_MAXIMUM_LENGTH` AS `characterMaximumLength`
+                 , `CHARACTER_OCTET_LENGTH`   AS `characterOctetLength`
+                 , `NUMERIC_PRECISION`        AS `numericPrecision`
+                 , `NUMERIC_SCALE`            AS `numericScale`
+                 , `DATETIME_PRECISION`       AS `datetimePrecision`
+                 , `CHARACTER_SET_NAME`       AS `characterSetName`
+                 , `COLLATION_NAME`           AS `collationName`
+                 , `COLUMN_TYPE`              AS `columnType`
+                 , `COLUMN_KEY`               AS `columnKey`
+                 , `EXTRA`                    AS `extra`
+                 , `PRIVILEGES`               AS `privileges`
+                 , `COLUMN_COMMENT`           AS `columnComment`
+                 , `GENERATION_EXPRESSION`    AS `generationExpression`
+                 FROM INFORMATION_SCHEMA.COLUMNS
+                 WHERE INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA = (SELECT database());
+    </select>
+
+    <select id="getSqlStructVosByTableName" resultType="demo.spring.boot.demospringboot.guest.vo.SqlStructVo">
+         SELECT    `TABLE_CATALOG`            AS `table_catalog`
+                 , `TABLE_SCHEMA`             AS `table_schema`
+                 , `TABLE_NAME`               AS `table_name`
+                 , `COLUMN_NAME`              AS `column_name`
+                 , `ORDINAL_POSITION`         AS `ordinal_position`
+                 , `COLUMN_DEFAULT`           AS `column_default`
+                 , `IS_NULLABLE`              AS `is_nullable`
+                 , `DATA_TYPE`                AS `data_type`
+                 , `CHARACTER_MAXIMUM_LENGTH` AS `character_maximum_lengt`
+                 , `CHARACTER_OCTET_LENGTH`   AS `character_octet_length`
+                 , `NUMERIC_PRECISION`        AS `numeric_precision`
+                 , `NUMERIC_SCALE`            AS `numeric_scale`
+                 , `DATETIME_PRECISION`       AS `datetime_precision`
+                 , `CHARACTER_SET_NAME`       AS `character_set_name`
+                 , `COLLATION_NAME`           AS `collation_name`
+                 , `COLUMN_TYPE`              AS `column_type`
+                 , `COLUMN_KEY`               AS `column_key`
+                 , `EXTRA`                    AS `extra`
+                 , `PRIVILEGES`               AS `privileges`
+                 , `COLUMN_COMMENT`           AS `column_comment`
+                 , `GENERATION_EXPRESSION`    AS `generation_expression`
+                 FROM INFORMATION_SCHEMA.COLUMNS
+                 WHERE INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA = (SELECT database()) and TABLE_NAME=#{tableName};
+    </select>
+
+
 </mapper>
